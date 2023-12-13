@@ -1,2 +1,3 @@
-# Boba-Tea-Flutter-App
-A Flutter Application that shows a functional boba shop application.
+# boba_tea_app
+
+A new Flutter project.
