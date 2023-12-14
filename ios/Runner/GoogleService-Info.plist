@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>112227182320-km1hve4poehbrk1gf7upviac1a19l054.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.112227182320-km1hve4poehbrk1gf7upviac1a19l054</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCKMobBcoGQKAFcpVKvp0BPKRl6QzLIQu0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>112227182320</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.bobaTeaApp</string>
+	<key>PROJECT_ID</key>
+	<string>flutter-boba-app-42eb3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flutter-boba-app-42eb3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:112227182320:ios:69713ce1342a2ee3984435</string>
+</dict>
+</plist>

@@ -17,12 +17,15 @@ class LoginFields extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, left: 24.0, right: 24.0),
       child: TextField(
+        
         style: const TextStyle(
           color: Colors.white,
         ),
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.brown[500],
           hintStyle: const TextStyle(
             color: Colors.white,
           ),

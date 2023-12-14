@@ -3,26 +3,26 @@
 import 'package:boba_tea_app/components/login_button.dart';
 import 'package:boba_tea_app/components/login_fields.dart';
 import 'package:boba_tea_app/components/square_tile.dart';
-import 'package:boba_tea_app/pages/forgot_password_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({required this.onTap, Key? key}) : super(key: key);
+  const RegisterPage({required this.onTap, Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   //text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   //sign user in and navigate to home page
-  void signUserIn() async {
+  void signUserUp() async {
     // show loading circle
     showDialog(
       context: context,
@@ -35,14 +35,30 @@ class _LoginPageState extends State<LoginPage> {
           false, // Prevents the dialog from being dismissed by tapping outside
     );
 
-    // sign user in
+    // try to create user account
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      // Dismiss the dialog when sign-in is successful
-      Navigator.of(context).pop();
+      //check if passwords match
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        // Dismiss the dialog when sign-up is successful
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+      } else {
+        // Dismiss the dialog when passwords do not match
+        if (mounted) {
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Passwords do not match.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
     } catch (e) {
       if (mounted) {
         // Dismiss the dialog when an error occurs
@@ -52,26 +68,20 @@ class _LoginPageState extends State<LoginPage> {
         String message;
         if (e.code == 'invalid-credential') {
           // Handle invalid credential error
-          message = 'Incorrect Email or Password.';
-        } else if (e.code == 'user-disabled') {
-          // Handle account disabled error
-          message = 'This account has been disabled.';
-        } else if (e.code == 'user-not-found') {
-          // Handle account not found error
-          message = 'This account does not exist.';
-        } else if (e.code == 'wrong-password') {
-          // Handle wrong password error
-          message = 'Incorrect Email or Password.';
+          message =
+              'The supplied auth credential is incorrect, malformed, or has expired.';
         } else {
           // Handle other errors
-          message = 'An error occurred while signing in.';
+          message = 'An error occurred while signing up: ${e.message}';
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-            duration: const Duration(seconds: 2),
-          ),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
       } else {
         // If the exception is not a FirebaseAuthException, rethrow it.
         rethrow;
@@ -94,15 +104,15 @@ class _LoginPageState extends State<LoginPage> {
               //logo
               const Icon(
                 Icons.lock,
-                size: 100,
+                size: 85,
                 color: Colors.white,
               ),
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
 
               //welcome back, you've been missed!
-              const Text("Welcome back, you've been missed!",
+              const Text("Let's create an account for you!",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -126,24 +136,15 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
 
-              // forgot password button
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const ForgotPasswordPage();
-                    }));
-                  },
-                  child: const Text("Forgot Password?",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      )),
-                ),
+              // confirm password textfield
+              LoginFields(
+                hintText: "Confirm Password",
+                controller: confirmPasswordController,
+                obscureText: true,
               ),
+
+            
+              
               const SizedBox(
                 height: 20,
               ),
@@ -151,8 +152,8 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: LoginButton(
-                  text: "Sign In",
-                  signUserIn: () => signUserIn(),
+                  text: "Sign Up",
+                  signUserIn: () => signUserUp(),
                 ),
               ),
 
@@ -213,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                 // not a member? sign up here
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Not a member? ",
+                  const Text("Already have an account? ",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -224,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: widget.onTap,
-                    child: Text("Register now",
+                    child: Text("Login now",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

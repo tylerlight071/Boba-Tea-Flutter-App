@@ -23,6 +23,15 @@ The project is structured as follows:
 - `lib/models/`: This directory contains the data models.
 - `lib/pages/`: This directory contains the different pages/screens of the application.
 
+## 🔥 Setting Up Firebase
+
+1. Create a new project on Firebase console.
+2. Add an Android/iOS app to the project.
+3. Download the `google-services.json` (for Android) or `GoogleService-Info.plist` (for iOS) file.
+4. Place the file in the respective directory (`android/app/` for Android, `ios/Runner/` for iOS).
+5. Add the Firebase SDK to your `pubspec.yaml` file.
+6. Run `flutter packages get` to download the dependencies.
+
 ## 📜 License
 
 This project is licensed under the terms of the MIT license. For more details, see the [LICENSE](LICENSE) file.
