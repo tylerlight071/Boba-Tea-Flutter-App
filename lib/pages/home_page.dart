@@ -1,10 +1,13 @@
 import 'package:boba_tea_app/components/bottom_nav_bar.dart';
 import 'package:boba_tea_app/pages/cart_page.dart';
 import 'package:boba_tea_app/pages/shop_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   State<HomePage> createState() => _HomePageState();

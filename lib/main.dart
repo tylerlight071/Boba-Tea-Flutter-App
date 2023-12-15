@@ -1,9 +1,15 @@
 import 'package:boba_tea_app/models/shop.dart';
-import 'package:boba_tea_app/pages/login_page.dart';
+import 'package:boba_tea_app/pages/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -16,7 +22,7 @@ class MyApp extends StatelessWidget {
         create: (context) => BubbleTeaShop(),
         builder: (context, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const LoginPage(),
+            home: const AuthPage(),
             theme: ThemeData(
               primaryColor: Colors.brown,
               sliderTheme: SliderThemeData(
