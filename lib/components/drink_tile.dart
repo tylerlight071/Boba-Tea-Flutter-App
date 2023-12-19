@@ -21,7 +21,7 @@ class DrinkTile extends StatelessWidget {
           height: 120, // Set the height of the container
           margin: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            color: Colors.brown[300],
+            color: const Color(0xFFCEC5BA),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -41,12 +41,17 @@ class DrinkTile extends StatelessWidget {
                   children: [
                     Text(
                       drink.name,
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       drink.price,
-                      style: const TextStyle(fontSize: 16),
-                    )
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
                   ],
                 ),
               ),

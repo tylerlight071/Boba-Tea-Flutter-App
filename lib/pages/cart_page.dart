@@ -1,9 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:boba_tea_app/components/drink_tile.dart';
+import 'package:boba_tea_app/components/drink_tile_cart.dart';
 import 'package:boba_tea_app/models/drink.dart';
 import 'package:boba_tea_app/models/shop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
@@ -30,31 +31,48 @@ class CartPageState extends State<CartPage> {
           child: Column(
             // heading
             children: [
+              const Icon(Icons.shopping_cart, size: 50, color: Colors.black54,),
               const Text(
                 "Your Cart",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  color: Colors.black54,
                 ),
               ),
               const Divider(),
+
+// Inside your ListView.builder
               Expanded(
                 child: ListView.builder(
-                    itemCount: value.cart.length,
-                    itemBuilder: (context, index) {
-                      //get individual drink in cart first
-                      Drink drink = value.cart[index];
+                  itemCount: value.cart.length,
+                  itemBuilder: (context, index) {
+                    //get individual drink in cart first
+                    Drink drink = value.cart[index];
 
-                      // return drink as a tile
-                      return DrinkTile(
+                    // return drink as a tile
+                    return Slidable(
+                      key: ValueKey(index),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            borderRadius: BorderRadius.circular(10),
+                            onPressed: (context) =>
+                                value.removeDrinkFromCart(drink),
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Delete',
+                          ),
+                        ],
+                      ),
+                      child: DrinkTileCart(
                         drink: drink,
-                        onTap: () => removeDrinkFromCart(drink),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.remove_circle_outline),
-                          onPressed: () => value.removeDrinkFromCart(drink),
-                        ),
-                      );
-                    }),
+                      ),
+                    );
+                  },
+                ),
               ),
               const Divider(),
               // total price

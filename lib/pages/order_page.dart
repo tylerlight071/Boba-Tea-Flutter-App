@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
   final Drink drink;
-  const OrderPage({super.key, 
+  const OrderPage({
+    super.key,
     required this.drink,
   });
 
@@ -19,6 +20,7 @@ class _OrderPageState extends State<OrderPage> {
   void customizeSweet(double value) {
     setState(() {
       sweetValue = value;
+      widget.drink.sweetValue = value;
     });
   }
 
@@ -27,6 +29,7 @@ class _OrderPageState extends State<OrderPage> {
   void customizeIce(double value) {
     setState(() {
       iceValue = value;
+      widget.drink.iceValue = value;
     });
   }
 
@@ -35,13 +38,16 @@ class _OrderPageState extends State<OrderPage> {
   void customizePearl(double value) {
     setState(() {
       pearlValue = value;
+      widget.drink.pearlValue = value;
     });
   }
 
   //add to cart
   void addToCart() {
     // firstly add to cart
-    Provider.of<BubbleTeaShop>(context, listen: false).addToCart(widget.drink);
+    Provider.of<BubbleTeaShop>(context, listen: false)
+        .addToCartWithCustomizations(
+            widget.drink, sweetValue, iceValue, pearlValue);
 
     // direct user back to shop page
     Navigator.pop(context);
@@ -54,8 +60,12 @@ class _OrderPageState extends State<OrderPage> {
           children: [
             Text(
               "${widget.drink.name} added to cart!  ",
-              style: const TextStyle(fontSize: 18),),
-              const Icon(Icons.check, color: Colors.green,)
+              style: const TextStyle(fontSize: 18),
+            ),
+            const Icon(
+              Icons.check,
+              color: Colors.green,
+            )
           ],
         ),
       ),
@@ -77,10 +87,11 @@ class _OrderPageState extends State<OrderPage> {
           style:
               const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color(0xFFB0A599),
       ),
-      backgroundColor: Colors.brown.shade300,
+      backgroundColor: const Color(0xFFB0A599),
       body: Column(children: [
+        const Divider(),
         // drink image
         Image.asset(widget.drink.imagePath),
 
@@ -97,11 +108,22 @@ class _OrderPageState extends State<OrderPage> {
                     child: Text("Sweet"),
                   ),
                   Expanded(
-                    child: Slider(
-                      value: sweetValue,
-                      label: sweetValue.toString(),
-                      divisions: 4,
-                      onChanged: (value) => customizeSweet(value),
+                    child: Theme(
+                      data: ThemeData(
+                        sliderTheme: SliderThemeData(
+                          activeTrackColor: Colors.pink.shade200,
+                          inactiveTrackColor: Colors.pink.shade100,
+                          thumbColor: Colors.pink.shade400,
+                          valueIndicatorColor: Colors.pink.shade400,
+                          trackHeight: 3,
+                        ),
+                      ),
+                      child: Slider(
+                        value: sweetValue,
+                        label: widget.drink.getSweetLabel(),
+                        divisions: 4,
+                        onChanged: (value) => customizeSweet(value),
+                      ),
                     ),
                   ),
                 ],
@@ -116,11 +138,22 @@ class _OrderPageState extends State<OrderPage> {
                     child: Text("Ice"),
                   ),
                   Expanded(
-                    child: Slider(
-                      value: iceValue,
-                      label: iceValue.toString(),
-                      divisions: 4,
-                      onChanged: (value) => customizeIce(value),
+                    child: Theme(
+                      data: ThemeData(
+                        sliderTheme: SliderThemeData(
+                          activeTrackColor: Colors.blue.shade200,
+                          inactiveTrackColor: Colors.blue.shade100,
+                          thumbColor: Colors.blue.shade400,
+                          valueIndicatorColor: Colors.blue.shade400,
+                          trackHeight: 3,
+                        ),
+                      ),
+                      child: Slider(
+                        value: iceValue,
+                        label: widget.drink.getIceLabel(),
+                        divisions: 4,
+                        onChanged: (value) => customizeIce(value),
+                      ),
                     ),
                   ),
                 ],
@@ -134,11 +167,22 @@ class _OrderPageState extends State<OrderPage> {
                     child: Text("Pearls"),
                   ),
                   Expanded(
-                    child: Slider(
-                      value: pearlValue,
-                      label: pearlValue.toString(),
-                      divisions: 4,
-                      onChanged: (value) => customizePearl(value),
+                    child: Theme(
+                      data: ThemeData(
+                        sliderTheme: const SliderThemeData(
+                          activeTrackColor: Colors.black54,
+                          inactiveTrackColor: Colors.black45,
+                          thumbColor: Colors.black,
+                          valueIndicatorColor: Colors.black87,
+                          trackHeight: 3,
+                        ),
+                      ),
+                      child: Slider(
+                        value: pearlValue,
+                        label: widget.drink.getPearlLabel(),
+                        divisions: 4,
+                        onChanged: (value) => customizePearl(value),
+                      ),
                     ),
                   ),
                 ],

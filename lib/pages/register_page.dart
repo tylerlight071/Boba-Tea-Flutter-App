@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[400],
+      backgroundColor: const Color(0xFFB0A599),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -223,11 +223,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   GestureDetector(
                     onTap: widget.onTap,
-                    child: Text("Login now",
+                    child: const Text("Login now",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue[300],
+                          color: Color(0xFF685B54),
                         )),
                   ),
                 ],

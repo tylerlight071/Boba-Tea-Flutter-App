@@ -1,4 +1,5 @@
 import 'package:boba_tea_app/components/bottom_nav_bar.dart';
+import 'package:boba_tea_app/components/logo_tile.dart';
 import 'package:boba_tea_app/pages/cart_page.dart';
 import 'package:boba_tea_app/pages/shop_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,11 +36,92 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown.shade400,
+      backgroundColor: const Color(0xFFB0A599),
       bottomNavigationBar: MyBottomNavBar(
         onTabChange: navigateBottomBar,
       ),
       body: _pages[_selectedIndex],
+      drawer: Drawer(
+            child: Container(
+              color: const Color(0xFFCEC5BA),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: const [
+                        DrawerHeader(
+                            child: LogoTile(
+                          imagePath: 'lib/assets/images/pearl_milk_tea.png',
+                        )),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text(
+                              "Profile",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onTap: // ! go to profile page
+                                null,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: ListTile(
+                            leading: Icon(Icons.info),
+                            title: Text(
+                              "About",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            // ! go to about page
+                            onTap: null,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: ListTile(
+                            leading: Icon(Icons.settings),
+                            title: Text(
+                              "Settings",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            // ! go to settings page
+                            onTap: null,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 0.5,
+                    color: Colors.black54,
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text(
+                      "Sign Out",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () => signUserOut(),
+                  )
+                ],
+              ),
+            ),
+          ),
     );
   }
+  
+  signUserOut() {}
 }

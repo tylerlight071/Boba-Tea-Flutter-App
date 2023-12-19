@@ -31,8 +31,7 @@ class _LoginPageState extends State<LoginPage> {
           child: CircularProgressIndicator(),
         );
       },
-      barrierDismissible:
-          false, // Prevents the dialog from being dismissed by tapping outside
+      barrierDismissible: false,
     );
 
     // sign user in
@@ -42,39 +41,35 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
       // Dismiss the dialog when sign-in is successful
-      Navigator.of(context).pop();
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
     } catch (e) {
       if (mounted) {
         // Dismiss the dialog when an error occurs
         Navigator.of(context).pop();
-      }
-      if (e is FirebaseAuthException) {
-        String message;
-        if (e.code == 'invalid-credential') {
-          // Handle invalid credential error
-          message = 'Incorrect Email or Password.';
-        } else if (e.code == 'user-disabled') {
-          // Handle account disabled error
-          message = 'This account has been disabled.';
-        } else if (e.code == 'user-not-found') {
-          // Handle account not found error
-          message = 'This account does not exist.';
-        } else if (e.code == 'wrong-password') {
-          // Handle wrong password error
-          message = 'Incorrect Email or Password.';
+        if (e is FirebaseAuthException) {
+          String message;
+          if (e.code == 'invalid-credential') {
+            message = 'Incorrect Email or Password.';
+          } else if (e.code == 'user-disabled') {
+            message = 'This account has been disabled.';
+          } else if (e.code == 'user-not-found') {
+            message = 'This account does not exist.';
+          } else if (e.code == 'wrong-password') {
+            message = 'Incorrect Email or Password.';
+          } else {
+            message = 'An error occurred while signing in.';
+          }
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 2),
+            ),
+          );
         } else {
-          // Handle other errors
-          message = 'An error occurred while signing in.';
+          rethrow;
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      } else {
-        // If the exception is not a FirebaseAuthException, rethrow it.
-        rethrow;
       }
     }
   }
@@ -82,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[400],
+      backgroundColor: Color(0xFFB0A599),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -192,18 +187,22 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
               ),
 
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // google logo
-                  SquareTile(imagePath: 'lib/assets/images/google_logo.png'),
+                  GestureDetector(
+                      onTap: () {},
+                      child: const SquareTile(
+                          imagePath: 'lib/assets/images/google_logo.png')),
 
-                  SizedBox(
+                  const SizedBox(
                     width: 50,
                   ),
 
                   // apple logo
-                  SquareTile(imagePath: 'lib/assets/images/apple_logo.png'),
+                  const SquareTile(
+                      imagePath: 'lib/assets/images/apple_logo.png'),
                 ],
               ),
               const SizedBox(
@@ -224,11 +223,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: widget.onTap,
-                    child: Text("Register now",
+                    child: const Text("Register now",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                        color: Colors.blue[300],
+                          color: Color(0xFF685B54),
                         )),
                   ),
                 ],

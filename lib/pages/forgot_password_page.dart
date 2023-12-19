@@ -53,42 +53,61 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[400],
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          onPressed: () {
+            // go back to login page
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0.0,
         title: const Text(
           'Forgot Password',
           style: TextStyle(
               color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Enter your email to reset your password',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold)),
-          LoginFields(
-            hintText: "Email",
-            obscureText: false,
-            controller: _emailController,
-          ),
-          // using LoginButton to match the style of the other buttons
-          LoginButton(
-              signUserIn: () {
-                // reset password
-                passwordReset();
-              },
-              text: 'Reset Password'),
-        ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            const Positioned(
+              top: 80, // Adjust this value to move the email icon up or down
+              left: 0,
+              right: 0,
+              child: Icon(Icons.email, size: 160, color: Colors.white),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 285), // Add some space at the top of the Column
+              child: Column(
+                children: [
+                  const Text('Enter your email to reset your password',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                  LoginFields(
+                    hintText: "Email",
+                    obscureText: false,
+                    controller: _emailController,
+                  ),
+                  // using LoginButton to match the style of the other buttons
+                  LoginButton(
+                      signUserIn: () {
+                        // reset password
+                        passwordReset();
+                      },
+                      text: 'Reset Password'),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

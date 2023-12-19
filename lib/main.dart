@@ -24,15 +24,10 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: const AuthPage(),
             theme: ThemeData(
-              primaryColor: Colors.brown,
-              sliderTheme: SliderThemeData(
-                  thumbColor: Colors.brown[100],
-                  activeTrackColor: Colors.brown,
-                  inactiveTrackColor: Colors.brown.withOpacity(0.5),
-                  valueIndicatorColor: Colors.brown),
+              primaryColor: const Color(0xFFCEC5BA),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.brown,
+                  backgroundColor: const Color(0xFF694B41),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),

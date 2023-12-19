@@ -57,6 +57,15 @@ class BubbleTeaShop extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addToCartWithCustomizations(
+      Drink drink, double sweetValue, double iceValue, double pearlValue) {
+    _cart.add(drink);
+    _cart.last.sweetValue =  sweetValue;
+    _cart.last.iceValue = iceValue;
+    _cart.last.pearlValue = pearlValue;
+    notifyListeners();
+  }
+
   // remove drink from cart
   void removeDrinkFromCart(Drink drink) {
     _cart.remove(drink);
