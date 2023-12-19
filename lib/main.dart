@@ -1,5 +1,6 @@
 import 'package:boba_tea_app/models/shop.dart';
 import 'package:boba_tea_app/pages/auth_page.dart';
+import 'package:boba_tea_app/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         create: (context) => BubbleTeaShop(),
         builder: (context, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const AuthPage(),
+            home: AuthPage(),
             theme: ThemeData(
               primaryColor: const Color(0xFFCEC5BA),
               elevatedButtonTheme: ElevatedButtonThemeData(

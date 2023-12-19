@@ -1,9 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:boba_tea_app/components/login_button.dart';
 import 'package:boba_tea_app/components/login_fields.dart';
-import 'package:boba_tea_app/components/square_tile.dart';
-import 'package:boba_tea_app/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +19,21 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final ageController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    ageController.dispose();
+    super.dispose();
+  }
 
   //sign user in and navigate to home page
   void signUserUp() async {
@@ -40,10 +53,19 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       //check if passwords match
       if (passwordController.text == confirmPasswordController.text) {
+        // create user account
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
+        // add user details
+        adduserDetails(
+          firstNameController.text,
+          lastNameController.text,
+          emailController.text,
+          int.parse(ageController.text),
+        );
+
         // Dismiss the dialog when sign-up is successful
         if (mounted) {
           Navigator.of(context).pop();
@@ -90,6 +112,17 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  void adduserDetails(
+      String firstName, String lastName, String email, int age) async {
+    // get current user
+    await FirebaseFirestore.instance.collection('users').add({
+      'first name': firstName,
+      'last name': lastName,
+      'email': email,
+      'age': age,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,14 +133,15 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
             children: [
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
               //logo
               const Icon(
-                Icons.lock,
-                size: 85,
+                Icons.person,
+                size: 80,
                 color: Colors.white,
               ),
+
               const SizedBox(
                 height: 20,
               ),
@@ -122,7 +156,21 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 25,
               ),
-
+              LoginFields(
+                hintText: "First Name",
+                obscureText: false,
+                controller: firstNameController,
+              ),
+              LoginFields(
+                hintText: "Last Name",
+                obscureText: false,
+                controller: lastNameController,
+              ),
+              LoginFields(
+                hintText: "Age",
+                obscureText: false,
+                controller: ageController,
+              ),
               // username textfield
               LoginFields(
                 hintText: "Email",
@@ -157,61 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               const SizedBox(
-                height: 30,
-              ),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text("Or continue with",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          )),
-                    ),
-                    Expanded(
-                        child: Divider(
-                      thickness: 0.5,
-                      color: Colors.white,
-                    ))
-                  ],
-                ),
-              ),
-
-              const SizedBox(
-                height: 50,
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // google logo
-                  SquareTile(
-                      onTap: () => AuthService().signInWithGoogle(),
-                      imagePath: 'lib/assets/images/google_logo.png'),
-
-                  const SizedBox(
-                    width: 50,
-                  ),
-
-                  // apple logo
-                  SquareTile(
-                      onTap: () {},
-                      imagePath: 'lib/assets/images/apple_logo.png'),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
+                height: 10,
               ),
               Row(
                 // not a member? sign up here

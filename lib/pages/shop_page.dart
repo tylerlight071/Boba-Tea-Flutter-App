@@ -5,6 +5,7 @@ import "package:boba_tea_app/components/logo_tile.dart";
 import "package:boba_tea_app/models/drink.dart";
 import "package:boba_tea_app/models/shop.dart";
 import "package:boba_tea_app/pages/order_page.dart";
+import "package:boba_tea_app/pages/profile_page.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
@@ -86,27 +87,33 @@ class _ShopPageState extends State<ShopPage> {
                 children: [
                   Expanded(
                     child: ListView(
-                      children: const [
-                        DrawerHeader(
+                      children: [
+                        const DrawerHeader(
                             child: LogoTile(
                           imagePath: 'lib/assets/images/pearl_milk_tea.png',
                         )),
                         Padding(
-                          padding: EdgeInsets.only(top: 16),
+                          padding: const EdgeInsets.only(top: 16),
                           child: ListTile(
-                            leading: Icon(Icons.person),
-                            title: Text(
+                            leading: const Icon(Icons.person),
+                            title: const Text(
                               "Profile",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            onTap: // ! go to profile page
-                                null,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProfilePage(),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 16),
                           child: ListTile(
                             leading: Icon(Icons.info),
@@ -121,7 +128,7 @@ class _ShopPageState extends State<ShopPage> {
                             onTap: null,
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 16),
                           child: ListTile(
                             leading: Icon(Icons.settings),
