@@ -3,6 +3,7 @@
 import 'package:boba_tea_app/components/login_button.dart';
 import 'package:boba_tea_app/components/login_fields.dart';
 import 'package:boba_tea_app/components/square_tile.dart';
+import 'package:boba_tea_app/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -191,18 +192,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 50,
               ),
 
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // google logo
-                  SquareTile(imagePath: 'lib/assets/images/google_logo.png'),
+                  SquareTile(
+                      onTap: () => AuthService().signInWithGoogle(),
+                      imagePath: 'lib/assets/images/google_logo.png'),
 
-                  SizedBox(
+                  const SizedBox(
                     width: 50,
                   ),
 
                   // apple logo
-                  SquareTile(imagePath: 'lib/assets/images/apple_logo.png'),
+                  SquareTile(
+                      onTap: () {},
+                      imagePath: 'lib/assets/images/apple_logo.png'),
                 ],
               ),
               const SizedBox(

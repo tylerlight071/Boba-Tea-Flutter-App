@@ -4,6 +4,7 @@ import 'package:boba_tea_app/components/login_button.dart';
 import 'package:boba_tea_app/components/login_fields.dart';
 import 'package:boba_tea_app/components/square_tile.dart';
 import 'package:boba_tea_app/pages/forgot_password_page.dart';
+import 'package:boba_tea_app/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -77,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFB0A599),
+      backgroundColor: const Color(0xFFB0A599),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -184,26 +185,15 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // google logo
-                  GestureDetector(
-                      onTap: () {},
-                      child: const SquareTile(
-                          imagePath: 'lib/assets/images/google_logo.png')),
-
-                  const SizedBox(
-                    width: 50,
-                  ),
-
-                  // apple logo
-                  const SquareTile(
-                      imagePath: 'lib/assets/images/apple_logo.png'),
-                ],
+              SquareTile(
+                  onTap: () => AuthService().signInWithGoogle(),
+                  imagePath: 'lib/assets/images/google_logo.png'),
+              
+              const SizedBox(
+                width: 50,
               ),
               const SizedBox(
                 height: 30,
